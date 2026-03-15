@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section pass-section">
+    <div class="pass-card" data-aos="zoom-in">
+        <h2>Digital Event Pass</h2>
+        <p class="pass-event">{{ event.name }}</p>
+        <p class="pass-meta">{{ event.get('date', '') }} · {{ event.get('venue', 'Campus') }}</p>
+
+        <div class="qr-wrapper">
+            <canvas id="qrCanvas"></canvas>
+        </div>
+
+        <p class="pass-id">Pass ID: {{ registration_id }}</p>
+        <p class="pass-note">Show this QR code at the registration desk for entry.</p>
+
+        <div class="pass-actions">
+            <button id="downloadPass" class="btn-outline ripple">Download Pass</button>
+            <a href="{{ url_for('events') }}" class="btn-primary ripple">Back to Events</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.QRious) {
+            const qr = new QRious({
+                element: document.getElementById('qrCanvas'),
+                value: '{{ registration_id }}',
+                size: 220,
+                level: 'H'
+            });
+
+            const downloadBtn = document.getElementById('downloadPass');
+            downloadBtn.addEventListener('click', function () {
+                const link = document.createElement('a');
+                link.href = qr.canvas.toDataURL('image/png');
+                link.download = 'event-pass-{{ registration_id }}.png';
+                link.click();
+            });
+        }
+    });
+</script>
+{% endblock %}
+

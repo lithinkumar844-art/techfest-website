@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section help-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Help & FAQs</h2>
+        <p>Ask questions about events, schedules, and registrations.</p>
+    </div>
+
+    <div class="chatbot-layout">
+        <div class="chatbot-card" data-aos="fade-right">
+            <div class="chat-header">
+                <h3>Fest Assistant</h3>
+                <span class="chat-status">Online</span>
+            </div>
+            <div id="chatMessages" class="chat-messages">
+                <div class="msg bot">
+                    <p>Hey! I’m your Fest Assistant. Ask me about schedules, registration, or venues.</p>
+                </div>
+            </div>
+            <form id="chatForm" class="chat-input-row">
+                <input id="chatInput" type="text" placeholder="Type your question..." required>
+                <button type="submit" class="btn-primary ripple">Send</button>
+            </form>
+        </div>
+
+        <div class="faq-card" data-aos="fade-left">
+            <h3>Quick FAQs</h3>
+            <ul>
+                <li>How do I register for an event?</li>
+                <li>Where can I see the full schedule?</li>
+                <li>How do I know my venue?</li>
+                <li>Who do I contact for help?</li>
+            </ul>
+            <p>Type any of these questions in the chat to get an instant answer.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

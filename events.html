@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section events-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>All Events</h2>
+        <p>Browse technical and non-technical events from your college tech fest.</p>
+    </div>
+
+    <div class="event-filters" data-aos="fade-up">
+        <button class="filter-btn active ripple" data-filter="all">All</button>
+        <button class="filter-btn ripple" data-filter="Technical Events">Technical</button>
+        <button class="filter-btn ripple" data-filter="Non-Technical Events">Non-Technical</button>
+        <button class="filter-btn ripple" data-filter="Hackathon">Hackathon</button>
+        <button class="filter-btn ripple" data-filter="Coding Contest">Coding</button>
+        <button class="filter-btn ripple" data-filter="Robotics Challenge">Robotics</button>
+        <button class="filter-btn ripple" data-filter="Gaming Contest">Gaming</button>
+    </div>
+
+    <div class="events-grid">
+        {% for event in events %}
+        <article class="event-card hover-lift" data-type="{{ event.get('type', '') }}" data-aos="fade-up" data-aos-delay="{{ loop.index * 60 }}">
+            <div class="event-type">{{ event.get('type', 'Event') }}</div>
+            <h3>{{ event.name }}</h3>
+            <p class="event-date">{{ event.date }}</p>
+            <p class="event-summary">{{ event.get('short_description', 'Exciting campus event.') }}</p>
+            <div class="chip-row">
+                {% if event.get('category') %}
+                <span class="chip">{{ event.category }}</span>
+                {% endif %}
+                {% if event.get('mode') %}
+                <span class="chip">{{ event.mode }}</span>
+                {% endif %}
+            </div>
+            <div class="card-actions">
+                <a href="{{ url_for('event_detail', event_id=event._id) }}" class="btn-outline ripple">View Details</a>
+                <a href="{{ url_for('register', event_id=event._id) }}" class="btn-primary ripple">Register</a>
+            </div>
+        </article>
+        {% else %}
+        <p class="no-events" data-aos="fade-up">No events published yet. Admins can create events from the Admin dashboard.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

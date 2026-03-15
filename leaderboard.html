@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section leaderboard-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Leaderboard</h2>
+        <p>Celebrate the top performers across all events.</p>
+    </div>
+
+    <div class="leaderboard-grid">
+        {% for p in leaders %}
+        <div class="leader-card hover-lift" data-aos="zoom-in" data-aos-delay="{{ loop.index * 80 }}">
+            <div class="leader-rank">#{{ loop.index }}</div>
+            <div class="leader-info">
+                <h3>{{ p.get('name') }}</h3>
+                <p class="leader-meta">{{ p.get('college', 'College') }}</p>
+            </div>
+            <div class="leader-score">
+                <span>{{ p.get('score', 0) }}</span>
+                <small>Score</small>
+            </div>
+        </div>
+        {% else %}
+        <p class="no-events" data-aos="fade-up">Leaderboard will appear once results are published.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

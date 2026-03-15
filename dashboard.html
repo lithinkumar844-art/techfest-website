@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section dashboard-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Student Dashboard</h2>
+        <p>View your registered events, results, and achievement badges.</p>
+    </div>
+
+    <form class="form-card inline-form" method="get" data-aos="fade-up">
+        <div class="form-group">
+            <label>Enter your registered email</label>
+            <input type="email" name="email" value="{{ email or '' }}" required>
+        </div>
+        <button type="submit" class="btn-primary ripple">Load My Events</button>
+    </form>
+
+    {% if registrations %}
+    <div class="dashboard-grid">
+        <div class="dashboard-panel" data-aos="fade-right">
+            <h3>Registered Events</h3>
+            <div class="events-grid compact">
+                {% for reg in registrations %}
+                <article class="event-card hover-lift small" data-aos="fade-up" data-aos-delay="{{ loop.index * 60 }}">
+                    <h4>{{ reg.get('event_name', 'Event') }}</h4>
+                    <p class="event-date">{{ reg.get('event_date', '') }}</p>
+                    <p class="event-summary">Registered as {{ reg.get('name') }}</p>
+                    {% if reg.get('team_name') %}
+                    <p class="chip">Team: {{ reg.team_name }}</p>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="dashboard-panel" data-aos="fade-left">
+            <h3>Achievements</h3>
+            <div class="badge-row">
+                <div class="badge-card" data-aos="zoom-in">
+                    <span class="badge-icon">🏅</span>
+                    <div>
+                        <h4>Fest Explorer</h4>
+                        <p>Register for at least one event.</p>
+                    </div>
+                </div>
+                <div class="badge-card" data-aos="zoom-in" data-aos-delay="80">
+                    <span class="badge-icon">🚀</span>
+                    <div>
+                        <h4>Tech Enthusiast</h4>
+                        <p>Join a technical event like hackathon or coding contest.</p>
+                    </div>
+                </div>
+                <div class="badge-card" data-aos="zoom-in" data-aos-delay="140">
+                    <span class="badge-icon">🎮</span>
+                    <div>
+                        <h4>Fun Squad</h4>
+                        <p>Participate in a non-technical event.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% elif email %}
+    <p class="no-events" data-aos="fade-up">No registrations found for {{ email }} yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
+

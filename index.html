@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="home" class="hero-section">
+    <div class="hero-left" data-aos="fade-right">
+        <h1>Discover. Compete. <span>Shine.</span></h1>
+        <p>One platform for every college tech fest. Explore events, register with a click, and track your achievements.</p>
+        <div class="hero-actions">
+            <a href="{{ url_for('events') }}" class="btn-primary btn-lg ripple">Explore Events</a>
+            {% if upcoming_event %}
+            <a href="{{ url_for('register', event_id=upcoming_event._id) }}" class="btn-outline btn-lg ripple">
+                Quick Register
+            </a>
+            {% else %}
+            <a href="{{ url_for('events') }}" class="btn-outline btn-lg ripple">
+                View All Events
+            </a>
+            {% endif %}
+        </div>
+        {% if upcoming_event %}
+        <div class="countdown-card" data-event-date="{{ upcoming_event.date }}">
+            <h3>Next Big Event: {{ upcoming_event.name }}</h3>
+            <div class="countdown-timer">
+                <div><span class="days">00</span><small>Days</small></div>
+                <div><span class="hours">00</span><small>Hours</small></div>
+                <div><span class="minutes">00</span><small>Minutes</small></div>
+                <div><span class="seconds">00</span><small>Seconds</small></div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="hero-right" data-aos="fade-left">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide hero-slide hero-techfest">
+                    <div class="slide-overlay">
+                        <h2>Tech Fest</h2>
+                        <p>Experience the future of innovation.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide hero-coding">
+                    <div class="slide-overlay">
+                        <h2>Coding Competitions</h2>
+                        <p>Compete with the brightest coders.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide hero-robotics">
+                    <div class="slide-overlay">
+                        <h2>Robotics</h2>
+                        <p>Build, battle, and automate.</p>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide hero-hackathon">
+                    <div class="slide-overlay">
+                        <h2>Hackathons</h2>
+                        <p>Code all night, build something big.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section about-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>About the Tech Fest</h2>
+        <p>A centralized hub where colleges publish tech fest events and students discover opportunities.</p>
+    </div>
+    <div class="about-grid">
+        <div class="about-card" data-aos="fade-right">
+            <h3>For Colleges</h3>
+            <p>Publish events, manage registrations, and track participation from a single dashboard.</p>
+        </div>
+        <div class="about-card" data-aos="fade-up">
+            <h3>For Students</h3>
+            <p>Explore technical and non-technical events, register instantly, and earn digital badges.</p>
+        </div>
+        <div class="about-card" data-aos="fade-left">
+            <h3>For Communities</h3>
+            <p>Build a vibrant tech culture across campuses with open, discoverable events.</p>
+        </div>
+    </div>
+</section>
+
+<section id="featured" class="section featured-events">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Featured Events</h2>
+        <p>Handpicked events you shouldn’t miss.</p>
+    </div>
+    <div class="events-grid">
+        {% for event in featured_events %}
+        <article class="event-card hover-lift" data-aos="fade-up" data-aos-delay="{{ loop.index * 80 }}">
+            <div class="event-type">{{ event.get('type', 'Event') }}</div>
+            <h3>{{ event.name }}</h3>
+            <p class="event-date">{{ event.date }}</p>
+            <p class="event-summary">{{ event.get('short_description', 'Exciting campus event.') }}</p>
+            <div class="card-actions">
+                <a href="{{ url_for('event_detail', event_id=event._id) }}" class="btn-outline ripple">Details</a>
+                <a href="{{ url_for('register', event_id=event._id) }}" class="btn-primary ripple">Register</a>
+            </div>
+        </article>
+        {% else %}
+        <p class="no-events" data-aos="fade-up">No featured events yet. Check back soon!</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="schedule" class="section schedule-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Sample Schedule</h2>
+        <p>Customize this with your college’s actual timeline.</p>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item" data-aos="fade-right">
+            <span class="timeline-time">Day 1</span>
+            <div class="timeline-content">
+                <h3>Inauguration & Keynote</h3>
+                <p>Kick-off ceremony, keynote talks, and networking.</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-left">
+            <span class="timeline-time">Day 2</span>
+            <div class="timeline-content">
+                <h3>Hackathons & Coding</h3>
+                <p>24-hour hackathon, coding contests, and debugging battles.</p>
+            </div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right">
+            <span class="timeline-time">Day 3</span>
+            <div class="timeline-content">
+                <h3>Robotics & Showcases</h3>
+                <p>Robotics challenge, project expo, and prize distribution.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section event-detail-section">
+    <div class="event-detail-header" data-aos="fade-up">
+        <span class="event-type">{{ event.get('type', 'Event') }}</span>
+        <h1>{{ event.name }}</h1>
+        <p class="event-date">{{ event.date }}</p>
+        <div class="chip-row">
+            {% if event.get('category') %}
+            <span class="chip">{{ event.category }}</span>
+            {% endif %}
+            {% if event.get('mode') %}
+            <span class="chip">{{ event.mode }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="event-detail-grid">
+        <div class="event-main" data-aos="fade-right">
+            <h2>Description</h2>
+            <p>{{ event.get('description', 'Detailed description will be updated soon.') }}</p>
+
+            <h2>Rules</h2>
+            <ul class="rules-list">
+                {% for rule in event.get('rules', '').split('\n') if rule %}
+                <li>{{ rule }}</li>
+                {% else %}
+                <li>Rules will be announced by the organizers.</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ url_for('register', event_id=event._id) }}" class="btn-primary btn-lg ripple">Register Now</a>
+        </div>
+
+        <div class="event-side" data-aos="fade-left">
+            <h2>Venue</h2>
+            <p>{{ event.get('venue', 'Campus venue will be announced.') }}</p>
+            <div class="map-container">
+                {% set venue_query = (event.get('venue_query') or event.get('venue') or 'College Campus') | urlencode %}
+                <iframe
+                    width="100%"
+                    height="260"
+                    frameborder="0"
+                    style="border:0"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed/v1/place?key={{ config.get('GOOGLE_MAPS_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY_HERE') }}&q={{ venue_query }}">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

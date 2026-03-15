@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section register-section">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Register for {{ event.name }}</h2>
+        <p>Fill in your details to secure your spot. You’ll receive a digital event pass with QR code.</p>
+    </div>
+
+    <form class="form-card" method="post" data-aos="fade-up">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Register Number</label>
+                <input type="text" name="register_number" required>
+            </div>
+            <div class="form-group">
+                <label>Course</label>
+                <select name="course" required>
+                    <option value="">Select</option>
+                    <option value="UG">UG</option>
+                    <option value="PG">PG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Department</label>
+                <input type="text" name="department" required>
+            </div>
+            <div class="form-group">
+                <label>Year</label>
+                <select name="year" required>
+                    <option value="">Select</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Advisor / HOD Email</label>
+                <input type="email" name="advisor_email" required>
+            </div>
+        </div>
+
+        <div class="team-toggle">
+            <label>
+                <input type="checkbox" id="isTeamEvent" name="is_team">
+                Team Event
+            </label>
+        </div>
+
+        <div id="teamFields" class="team-fields hidden">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Team Name</label>
+                    <input type="text" name="team_name">
+                </div>
+                <div class="form-group full-width">
+                    <label>Member Details</label>
+                    <textarea name="member_details" rows="3" placeholder="List member names, register numbers, and departments."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-primary btn-lg ripple">Submit & Generate Pass</button>
+    </form>
+</section>
+{% endblock %}
+
